@@ -10,7 +10,7 @@ export default function Home() {
             <h1 className="text-4xl  font-bold tracking-tighter text-center text-white sm:text-5xl md:text-6xl lg:text-7xl font-jakarta leading-loose">
               Level Up Your Typing Skills <br /> with{" "}
               <span className="bg-gradient-to-b from-sky-400 to-blue-900 inline-block text-transparent bg-clip-text">
-                KeysWar
+                KeyboardWars
               </span>
             </h1>
             <p className="mt-6  md:px-16 text-lg leading-wide text-blue-200 font-jakarta">
@@ -20,14 +20,14 @@ export default function Home() {
             <div className="mt-8 flex justify-center gap-4">
               <Button
                 size="lg"
-                className="bg-blue-600 flex justify-center  font-jakarta text-white hover:bg-blue-700"
+                className="bg-blue-800 outline outline-1 outline-white flex justify-center  font-jakarta text-white hover:bg-blue-700"
               >
                 Start Typing <Keyboard className="size-10" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-blue-400   hover:bg-blue-900/50"
+                className="text-white  bg-black  hover:bg-blue-900/50"
               >
                 Start War <Swords/>
               </Button>
