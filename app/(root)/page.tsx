@@ -9,7 +9,7 @@ export default function Home() {
           <div className="mx-auto font-jakarta mt-16 max-w-4xl text-center">
             <h1 className="text-4xl  font-bold tracking-tighter text-center text-white sm:text-5xl md:text-6xl lg:text-7xl font-jakarta leading-loose">
               Level Up Your Typing Skills <br /> with{" "}
-              <span className="bg-gradient-to-b from-sky-400 to-blue-900 inline-block text-transparent bg-clip-text">
+              <span className="bg-gradient-to-b  from-sky-400 to-blue-900 inline-block text-transparent bg-clip-text">
                 KeyboardWars
               </span>
             </h1>
@@ -20,16 +20,16 @@ export default function Home() {
             <div className="mt-8 flex justify-center gap-4">
               <Button
                 size="lg"
-                className="bg-blue-800 outline outline-1 outline-white flex justify-center  font-jakarta text-white hover:bg-blue-700"
+                className="bg-blue-800  outline outline-1 outline-white flex justify-center  font-jakarta text-white hover:bg-blue-700"
               >
                 Start Typing <Keyboard className="size-10" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="text-white  bg-black  hover:bg-blue-900/50"
+                className="text-white   bg-black  "
               >
-                Start War <Swords/>
+                Start War <Swords />
               </Button>
             </div>
           </div>
