@@ -25,7 +25,7 @@ const Links = [
 const Navbar = async () => {
   const session = await auth();
   return (
-    <nav className="absolute mt-2 font-jakarta top-0 left-0 right-0 z-10">
+    <nav className="absolute  font-jakarta top-0 left-0 right-0 z-10">
       <div className="flex py-4 justify-between items-center gap-2 px-16">
         <Link href="/" className="cursor-pointer flex items-center gap-2">
           <div className="h-8 w-8 shadow-xl shadow-blue-500 rounded-lg outline outline-1 outline-neutral-200  bg-black flex items-center justify-center font-bold">
@@ -37,9 +37,9 @@ const Navbar = async () => {
         <div className="flex gap-10">
           {Links.map((link) => (
             <Link
-              className="flex hover:text-blue-500 gap-2 text-sm text-blue-200 items-center"
+              className="flex hover:text-blue-200 gap-2 text-sm text-white items-center"
               key={link.id}
-              href="/auth"
+              href="/practice"
             >
               {link.icon}
               <p>{link.name}</p>
@@ -64,6 +64,7 @@ const Navbar = async () => {
           )}
         </div>
       </div>
+      <div className="divide-x-2 bg-white"></div>
     </nav>
   );
 };

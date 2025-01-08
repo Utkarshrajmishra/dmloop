@@ -25,7 +25,7 @@ const Profile = async({ session }: { session: session }) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="rounded-full shadow-xl shadow-blue-800 outline outline-1 outline-blue-200">
+          <div className="rounded-full  outline outline-1 outline-blue-200">
             <Image
               src={session?.user?.image || "./vercel.svg"}
               alt="Profile"

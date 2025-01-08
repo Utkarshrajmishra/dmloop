@@ -10,7 +10,8 @@ export default {
   theme: {
     fontFamily: {
       jakarta: ["Plus Jakarta Sans", "sans-serif"],
-      inter:["Inter", "sans-serif"]
+      inter:["Inter", "sans-serif"],
+      giest:["Giest Mono","sans-serif"]
     },
     container: {
       center: true,
