@@ -7,18 +7,16 @@ const generateWords = (count: number) => {
   return faker.word.words(count).toLowerCase();
 };
 
-const useWords = (count: number) => {
+const useWords = (initialCount: number) => {
   const [words, setWords] = useState<string>("");
+    const [wordCount, setWordCount] = useState<number>(initialCount);
 
-  useEffect(() => {
-    setWords(generateWords(50));
-  }, [count]);
+   useEffect(()=>{
+    setWords(generateWords(initialCount))
+   },[initialCount])
 
-  const updateWords = useCallback(() => {
-    setWords(generateWords(count));
-  }, [count]);
-
-  return { words, updateWords };
+  
+  return { words, wordCount };
 };
 
 export default useWords;

@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Hourglass, Type } from "lucide-react";
 import FloatNavItem from "./FloatNavItems";
 import FloatNavButton from "./FloatNavButton";
+import useWords from "@/hooks/useWord";
 
-const FloatNav = () => {
+type FloatNavProps={
+    setWordCount:(count: number)=>void;
+    wordCount: number;
+}
+
+const FloatNav = ({setWordCount, wordCount}:FloatNavProps) => {
   const [activeTab, setActiveTab] = useState("time");
-  const [activeSize, setActiveSize] = useState("10");
-
+  const [activeSize, setActiveSize] = useState<number>(20);
+   
   return (
     <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-2 flex w-fit rounded-full backdrop-blur-sm shadow-lg border border-neutral-800">
       <div className="flex items-center space-x-2">
@@ -26,19 +32,19 @@ const FloatNav = () => {
         />
         <div className="w-px h-6 bg-neutral-700 mx-2" />
         <FloatNavButton
-          size="10"
-          isActive={activeSize === "10"}
-          onClick={() => setActiveSize("10")}
+          size="30"
+          isActive={wordCount === 30}
+          onClick={() => setWordCount(30)}
         />
         <FloatNavButton
-          size="15"
-          isActive={activeSize === "15"}
-          onClick={() => setActiveSize("15")}
+          size="50"
+          isActive={wordCount === 50}
+          onClick={() => setWordCount(50)}
         />
         <FloatNavButton
-          size="20"
-          isActive={activeSize === "20"}
-          onClick={() => setActiveSize("20")}
+          size="70"
+          isActive={wordCount === 70}
+          onClick={() => setWordCount(70)}
         />
       </div>
     </div>

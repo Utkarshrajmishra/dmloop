@@ -1,3 +1,5 @@
+"use clinet"
+
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const useTimer = (time: number) => {

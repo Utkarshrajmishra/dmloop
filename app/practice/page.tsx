@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 import FloatNav from "@/components/FloatNav";
 import Result from "@/components/Result";
 import UserTyping from "@/components/UserTyping";
+import { useState } from "react";
 
 const Practice = () => {
-  const { words, updateWords } = useWords(30);
+  const [wordCount, setWordCount] = useState<number>(30);
+  const { words } = useWords(wordCount);
 
   const containerVariants = {
     hidden: {
@@ -27,7 +29,7 @@ const Practice = () => {
   return (
     <section className="relative bg-gradient-to-b from-neutral-900 to-black h-[100vh] flex items-center justify-center">
       <div className=" absolute max-w-4xl px-4 text-center md:text-left">
-        <FloatNav />
+        <FloatNav setWordCount={setWordCount} wordCount={wordCount} />
         <div className="flex flex-col gap-8  items-center">
           <Result time={10} wrm={75} accuracy={30} />
           <motion.div
