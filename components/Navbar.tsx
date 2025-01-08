@@ -3,8 +3,7 @@ import { Zap, Keyboard, Trophy, Swords, User } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { auth, signIn } from "@/auth";
-import Image from "next/image";
-import { h1 } from "motion/react-client";
+import Profile from "./Profile";
 const Links = [
   {
     id: 1,
@@ -25,7 +24,6 @@ const Links = [
 
 const Navbar = async () => {
   const session = await auth();
-  console.log(session);
   return (
     <nav className="absolute mt-2 font-jakarta top-0 left-0 right-0 z-10">
       <div className="flex py-4 justify-between items-center gap-2 px-16">
@@ -48,15 +46,7 @@ const Navbar = async () => {
             </Link>
           ))}
           {session && session?.user ? (
-            <div className="rounded-full shadow-xl shadow-blue-800 outline outline-1 outline-blue-200">
-              <Image
-                src={session?.user?.image || "./vercel.svg"}
-                alt="Profile"
-                width={36}
-                height={35}
-                className="rounded-full"
-              />
-            </div>
+            <Profile session={session}/>
           ) : (
             <form
               action={async () => {
