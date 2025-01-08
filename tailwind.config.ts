@@ -11,7 +11,7 @@ export default {
     fontFamily: {
       jakarta: ["Plus Jakarta Sans", "sans-serif"],
       inter:["Inter", "sans-serif"],
-      giest:["Giest Mono","sans-serif"]
+      mono:["Space Mono","sans-serif"]
     },
     container: {
       center: true,

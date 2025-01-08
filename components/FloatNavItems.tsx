@@ -10,8 +10,8 @@ const FloatNavItem = ({ icon, label, isActive, onClick }: FloatNavProps) => (
       type="submit"
       className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-colors duration-200 ${
         isActive
-          ? "bg-neutral-700 text-white"
-          : "text-neutral-400 hover:text-white hover:bg-neutral-800"
+          ? "bg-neutral-900 text-white"
+          : "text-neutral-400 hover:text-white hover:bg-neutral-900"
       }`}
     >
       {icon}

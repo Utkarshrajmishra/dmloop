@@ -10,8 +10,8 @@ const FloatNavButton = ({ size, isActive, onClick }: FloatNavButtonProps) => (
     type="submit"
     className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
       isActive
-        ? "bg-neutral-700 text-white"
-        : "text-neutral-400 hover:text-white hover:bg-neutral-800"
+        ? "bg-neutral-900 text-white"
+        : "text-neutral-400 hover:text-white hover:bg-neutral-900"
     }`}
   >
     <span className="text-sm font-medium">{size}</span>

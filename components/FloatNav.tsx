@@ -10,7 +10,7 @@ const FloatNav = () => {
   const [activeSize, setActiveSize] = useState("10");
 
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-2 flex w-fit rounded-full bg-neutral-900/100 backdrop-blur-sm shadow-lg border border-neutral-800">
+    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-2 flex w-fit rounded-full backdrop-blur-sm shadow-lg border border-neutral-800">
       <div className="flex items-center space-x-2">
         <FloatNavItem
           icon={<Hourglass className="size-5" />}

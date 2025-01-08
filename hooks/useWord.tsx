@@ -10,9 +10,9 @@ const generateWords = (count: number) => {
 const useWords = (count: number) => {
   const [words, setWords] = useState<string>("");
 
-  useEffect(()=>{
-    setWords(generateWords(10))
-  },[count])
+  useEffect(() => {
+    setWords(generateWords(50));
+  }, [count]);
 
   const updateWords = useCallback(() => {
     setWords(generateWords(count));
