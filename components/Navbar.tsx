@@ -13,7 +13,7 @@ const Links = [
   {
     id: 2,
     icon: <Swords />,
-    name: "Multiplayer",
+    name: "Multiplayer War",
   },
   {
     id: 3,
