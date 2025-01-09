@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {signOut } from "@/auth";
+import Link from "next/link";
 
 type session = {
   user?: {
@@ -50,16 +51,20 @@ const Profile = async({ session }: { session: session }) => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Database className="mr-2 h-4 w-4" />
-              <p>Dashboard</p>
+              <Link href="/profile">
+               <p>Dashboard</p>
+              </Link>
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <form action={async()=>{
-                "use server"
-                await signOut();
-                console.log("Hello")
-              }}>
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut();
+                  console.log("Hello");
+                }}
+              >
                 <button type="submit" className="flex gap-2">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>

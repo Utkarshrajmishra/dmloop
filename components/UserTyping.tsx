@@ -1,4 +1,3 @@
-import { span } from "framer-motion/client";
 import Cursor from "./Cursor";
 import { cn } from "@/lib/utils";
 
