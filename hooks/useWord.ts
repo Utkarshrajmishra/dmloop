@@ -1,7 +1,7 @@
 "use client";
 
 import { faker } from "@faker-js/faker";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const generateWords = (count: number) => {
   return faker.word.words(count).toLowerCase();

@@ -3,7 +3,7 @@ import useTyping from "./useTyping";
 import useTimer from "./useTimer";
 import useAccuracy from "./useAccuracy";
 
-type gameState = "start" | "run" | "finish";
+export type gameState = "start" | "run" | "finish";
 
 const useEngine = (word: string) => {
   const [currentState, setCurrentState] = useState<gameState>("start");

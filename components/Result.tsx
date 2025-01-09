@@ -1,12 +1,10 @@
-import useEngine from "@/hooks/useEngine";
-
 type TimerProps={
     time: number,
-    wrm: number,
+    wpmScore: number,
     accuracy: number,
 }
 
-const Result = ({time, wrm, accuracy}: TimerProps) => {
+const Result = ({time, wpmScore, accuracy}: TimerProps) => {
   return (
     <div className="flex gap-4 h-fit w-fit">
       <div className="font-jakarta flex gap-2 text-neutral-300 text-xl">
@@ -14,7 +12,7 @@ const Result = ({time, wrm, accuracy}: TimerProps) => {
       </div>
       <div className="divide-y-2 divide-neutral-300"></div>
       <div className="font-jakarta flex gap-2 text-neutral-300 text-xl">
-        WRM :<p>{wrm.toString()}</p>{" "}
+        WRM :<p>{`${wpmScore}`}</p>{" "}
       </div>
       <div className="divide-y-2 divide-neutral-300"></div>
       <div className="font-jakarta flex gap-2 text-neutral-300 text-xl">

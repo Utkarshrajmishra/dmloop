@@ -8,11 +8,13 @@ import UserTyping from "@/components/UserTyping";
 import { useState } from "react";
 import useEngine from "@/hooks/useEngine";
 import { calculateAccuracyPercentage } from "@/lib/utils";
+import useWPM from "@/hooks/useWPM";
 
 const Practice = () => {
   const [wordCount, setWordCount] = useState<number>(50);
   const { words } = useWords(wordCount);
   const { typed, timer, resetGame, currentState, errors } = useEngine(words);
+  const {wpmHistory, latestWPM}=useWPM(typed,timer,currentState)
 
   const containerVariants = {
     hidden: {
@@ -39,7 +41,7 @@ const Practice = () => {
         />
         <div className="flex flex-col gap-8  items-center">
           {(currentState == "run" || currentState === "finish") && (
-            <Result time={timer} wrm={75} accuracy={calculateAccuracyPercentage(errors, words.length)} />
+            <Result time={timer} wpmScore={latestWPM} accuracy={calculateAccuracyPercentage(errors, words.length)} />
           )}
           <motion.div
             variants={containerVariants}
