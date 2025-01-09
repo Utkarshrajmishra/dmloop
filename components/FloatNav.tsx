@@ -30,6 +30,11 @@ const FloatNav = ({ reset, setWordCount, wordCount }: FloatNavProps) => {
         />
         <div className="w-px h-6 bg-neutral-700 mx-2" />
         <FloatNavButton
+          size="20"
+          isActive={wordCount === 20}
+          onClick={() => changeSize(20)}
+        />
+        <FloatNavButton
           size="30"
           isActive={wordCount === 30}
           onClick={() => changeSize(30)}
@@ -38,11 +43,6 @@ const FloatNav = ({ reset, setWordCount, wordCount }: FloatNavProps) => {
           size="50"
           isActive={wordCount === 50}
           onClick={() => changeSize(50)}
-        />
-        <FloatNavButton
-          size="70"
-          isActive={wordCount === 70}
-          onClick={() => changeSize(70)}
         />
       </div>
     </div>

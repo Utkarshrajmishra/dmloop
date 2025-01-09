@@ -1,6 +1,9 @@
 import { WPMType } from "@/hooks/useWPM";
-import { Hourglass, Target, Gauge } from "lucide-react";
+import { Hourglass, Target, Gauge, RotateCcw } from "lucide-react";
+import Chart from "./Chart";
+import { Button } from "./ui/button";
 export type FinalResultProps = {
+  resetGame:()=>void;
   totalWPM: number;
   time: number;
   accuracy: number;
@@ -8,15 +11,15 @@ export type FinalResultProps = {
 };
 
 const FinalResult = ({
-  totalWPM,
+  resetGame,
   time,
   accuracy,
   wpmHistory,
 }: FinalResultProps) => {
   return (
     <>
-      <div>
-        <div className="flex  px-4">
+      <div className="flex justify-center gap-6 h-[100vh] flex-col items-center">
+        <div className="flex md:w-[80%] lg:w-[60%] justify-between">
           <div className="rounded-xl  w-[250px] gap-3 border text-card-foreground  shadow bg-neutral-900/50 border-neutral-800 transition-all duration-300 hover:shadow-lg hover:bg-neutral-800/50 flex items-center py-6 px-9">
             <Target className="size-8 text-purple-500" />
             <div className="flex flex-col gap-1">
@@ -45,6 +48,13 @@ const FinalResult = ({
             </div>
           </div>
         </div>
+        <Chart wpmHistory={wpmHistory} />
+        <form action={resetGame}>
+          <Button type="submit" className="bg-black outline outline-1 outline-white tracking-wide">
+            <RotateCcw />
+            Practice Again
+          </Button>
+        </form>
       </div>
     </>
   );
