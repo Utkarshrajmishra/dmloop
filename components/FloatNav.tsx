@@ -1,26 +1,18 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { Hourglass, Type } from "lucide-react";
+import { Type } from "lucide-react";
 import FloatNavItem from "./FloatNavItems";
 import FloatNavButton from "./FloatNavButton";
-import useWords from "@/hooks/useWord";
 
-type FloatNavProps={
-    reset:()=>void;
-    setWordCount:(count: number)=>void;
-    wordCount: number;
-}
+type FloatNavProps = {
+  reset: () => void;
+  setWordCount: (count: number) => void;
+  wordCount: number;
+};
 
-const FloatNav = ({reset,setWordCount, wordCount}:FloatNavProps) => {
-  const [activeTab, setActiveTab] = useState("text");
-  const [activeSize, setActiveSize] = useState<number>(20);
-
-  const changeSize=(size:number)=>{
-
-      setWordCount(size)
-        reset()
-  }
+const FloatNav = ({ reset, setWordCount, wordCount }: FloatNavProps) => {
+  const changeSize = (size: number) => {
+    setWordCount(size);
+    reset();
+  };
 
   return (
     <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-2 flex w-fit rounded-full backdrop-blur-sm shadow-lg border border-neutral-800">
@@ -34,8 +26,7 @@ const FloatNav = ({reset,setWordCount, wordCount}:FloatNavProps) => {
         <FloatNavItem
           icon={<Type className="size-5" />}
           label="Word Count"
-          isActive={activeTab === "text"}
-          onClick={() => setActiveTab("text")}
+          isActive={true}
         />
         <div className="w-px h-6 bg-neutral-700 mx-2" />
         <FloatNavButton

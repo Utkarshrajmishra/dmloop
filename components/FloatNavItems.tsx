@@ -2,10 +2,9 @@ type FloatNavProps={
     icon:React.ReactElement,
     label:String,
     isActive:boolean,
-    onClick:()=>void,
 }
-const FloatNavItem = ({ icon, label, isActive, onClick }: FloatNavProps) => (
-  <form action={onClick}>
+const FloatNavItem = ({ icon, label, isActive }: FloatNavProps) => (
+  <form action="/">
     <button
       type="submit"
       className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-colors duration-200 ${

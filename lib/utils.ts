@@ -10,8 +10,9 @@ export const countErrors=(actual:string, expected:string)=>{
 
   return expectedCharacter.reduce((error, expectedChar, index)=>{
     const acutalChar=actual[index];
-    if(acutalChar!==expected){
+    if(acutalChar!==expectedChar){
       error++;
+      console.log(error)
     }
     return error
   },0)
@@ -20,7 +21,8 @@ export const countErrors=(actual:string, expected:string)=>{
 export const calculateAccuracyPercentage=(errors:number, total:number)=>{
   if(total>0){
     const correct=total-errors;
-    return (correct/total)*100;
+    const accuracy=(correct/total)*100;
+    return parseFloat(accuracy.toFixed(2));
   }
   return 0;
 }
