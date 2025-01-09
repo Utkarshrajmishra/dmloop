@@ -6,10 +6,12 @@ import FloatNav from "@/components/FloatNav";
 import Result from "@/components/Result";
 import UserTyping from "@/components/UserTyping";
 import { useState } from "react";
+import useEngine from "@/hooks/useEngine";
 
 const Practice = () => {
   const [wordCount, setWordCount] = useState<number>(30);
   const { words } = useWords(wordCount);
+  const {typed}=useEngine()
 
   const containerVariants = {
     hidden: {
@@ -37,8 +39,8 @@ const Practice = () => {
             initial="hidden"
             animate="visible"
           >
-            <div className="relative text-lg md:text-2xl text-center font-mono tracking-wider leading-loose">
-              <UserTyping classes="absolute inset-0" input={words} />
+            <div className="relative text-lg md:text-2xl text-left font-mono tracking-wider leading-loose">
+              <UserTyping word={words} classes="absolute inset-0" input={typed} />
               <h1 className="text-neutral-700 ">{words}</h1>
             </div>
           </motion.div>

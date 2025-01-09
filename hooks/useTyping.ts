@@ -16,6 +16,7 @@ const useTyping = (enable: boolean) => {
 
   const keydownHandler = useCallback(
     ({ key, code }: KeyboardEvent) => {
+        if(code=='Enter') return;
       if (!enable && !isKeyboardCodeAllowed(code)) return;
       switch (key) {
         case "Backspace":

@@ -13,7 +13,7 @@ const useEngine=()=>{
       typed,
       totalTyped,
     } = useTyping(currentState !== "finish");
-    return {currentState, setCurrentState};
+    return {currentState, setCurrentState, typed};
 }
 
 export default useEngine;
