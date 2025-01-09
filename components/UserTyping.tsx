@@ -1,5 +1,5 @@
 import { span } from "framer-motion/client";
-import Cursor from "./cursor";
+import Cursor from "./Cursor";
 import { cn } from "@/lib/utils";
 
 type UserTypingProps = {
