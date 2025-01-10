@@ -1,8 +1,11 @@
+"use client"
 import { WPMType } from "@/hooks/useWPM";
 import { Hourglass, Target, Gauge, RotateCcw } from "lucide-react";
 import Chart from "./Chart";
 import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
 export type FinalResultProps = {
+  currentState:string,
   resetGame:()=>void;
   totalWPM: number;
   time: number;
@@ -11,11 +14,33 @@ export type FinalResultProps = {
 };
 
 const FinalResult = ({
+  currentState,
   resetGame,
   time,
   accuracy,
   wpmHistory,
 }: FinalResultProps) => {
+ const [dataPushed, setDataPushed]=useState(false)
+  useEffect(()=>{
+  const pushUserData=async()=>{
+    if(currentState==="finish" && !dataPushed){
+      try {
+        await fetch("/api/db/pushData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ wpmHistory, accuracy, time }),
+        });
+        setDataPushed(true)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    };
+    pushUserData()
+  },[currentState])
+
   return (
     <>
       <div className="flex justify-center gap-6 h-[100vh] flex-col items-center">

@@ -73,6 +73,7 @@ const Practice = () => {
                 animate="visible"
            className="absolute w-[100%] mt-12">
             <FinalResult
+            currentState={currentState}
               resetGame={resetGame}
               totalWPM={latestWPM}
               time={timer}
