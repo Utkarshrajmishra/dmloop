@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Keyboard, Swords } from "lucide-react";
 export default function Home() {
+  
   return (
     <main>
       <section className=" h-[100vh] relative bg-gradient-to-b from-slate-900 via-blue-900 to-black">
