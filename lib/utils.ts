@@ -1,3 +1,4 @@
+import { WPMType } from "@/hooks/useWPM";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -27,5 +28,8 @@ export const calculateAccuracyPercentage=(errors:number, total:number)=>{
   return 0;
 }
 
-
+export const calculateWPMAverage=(wpmHistory: WPMType[])=>{
+    const totalWPM=wpmHistory.reduce((sum,currentWPM)=> sum+currentWPM.wpm,0)
+    return Math.round(totalWPM/wpmHistory.length)
+}
 
