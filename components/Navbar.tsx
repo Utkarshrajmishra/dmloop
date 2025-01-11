@@ -9,16 +9,19 @@ const Links = [
     id: 1,
     icon: <Keyboard />,
     name: "Practice",
+    path: '/practice'
   },
   {
     id: 2,
     icon: <Swords />,
     name: "Multiplayer War",
+    path:"/multiplayer"
   },
   {
     id: 3,
     icon: <Trophy />,
     name: "Leaderboard",
+    path:"/leaderboard"
   },
 ];
 
@@ -39,7 +42,7 @@ const Navbar = async () => {
             <Link
               className="flex hover:text-blue-200 gap-2 text-sm text-white items-center"
               key={link.id}
-              href="/practice"
+              href={link.path}
             >
               {link.icon}
               <p>{link.name}</p>

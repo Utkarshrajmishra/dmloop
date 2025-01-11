@@ -34,7 +34,7 @@ const Practice = () => {
 
   return (
     <>
-      <section className="relative bg-gradient-to-b from-neutral-900 to-black h-[100vh] w-[100%] flex items-center justify-center">
+      <section className="relative bg-gradient-to-b from-neutral-900 to-black min-h-[100vh] w-[100%] flex items-center justify-center">
         {currentState != "finish" ? (
           <div className=" absolute max-w-4xl px-4 text-center md:text-left">
             <FloatNav
