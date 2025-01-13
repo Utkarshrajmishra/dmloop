@@ -1,13 +1,59 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useSocket } from "@/context/SocketProvider";
 import { useParams } from "next/navigation";
 import { Hash, Copy, CirclePlay, Circle } from "lucide-react";
 import Chat from "@/components/Chat";
 import WarriorList from "@/components/WarriorList";
 
+export type WarriorType = {
+  email: string;
+  name: string;
+  photoUrl: string;
+  socketId: string;
+};
+
 const Page = () => {
   const params = useParams();
+  const socket = useSocket();
+  const [isConnected, setIsConnected] = useState(false);
+  const { data: session } = useSession();
+  const [warriors, setWarrior] = useState<WarriorType[]>([]);
 
+  const handleNewUser = (user: WarriorType[]) => {
+    setWarrior(user);
+  };
+
+  useEffect(() => {
+    if (params?.slug && socket && session && !isConnected) {
+      socket.emit("join_room", {
+        room: params.slug[0],
+        name: session.user?.name,
+        email: session.user?.email,
+        photoUrl: session.user?.image,
+      });
+      setIsConnected(true);
+    
+    socket?.on("users_updated", handleNewUser);
+
+
+    return () => {
+      if (socket && session?.user?.email && isConnected) {
+        socket.emit("leave_room", {
+          room: params?.slug?.[0],
+          email: session?.user?.email,
+        });
+        socket.off("users_updated", handleNewUser);
+        setIsConnected(false);
+      }
+    }
+    }
+  }, [params?.slug, socket, session, isConnected]);
+
+
+  
+  
   return (
     <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
       <div className="w-[80%] lg:w-[70%] items-center">
@@ -26,7 +72,7 @@ const Page = () => {
                   </p>
                 </div>
                 <button className="flex items-center gap-3 font-semibold text-neutral-200 py-2 px-3 rounded-md font-mono bg-emerald-700 hover:bg-emerald-800">
-                  <CirclePlay className="size-5"/>
+                  <CirclePlay className="size-5" />
                   Get Started
                 </button>
               </div>
@@ -39,7 +85,7 @@ const Page = () => {
               <div className="w-full h-[0.5px] bg-neutral-800 mt-4"></div>
               <div className="flex gap-2">
                 <Chat />
-                <WarriorList />
+                <WarriorList warriorList={warriors} />
               </div>
             </div>
           ) : null}

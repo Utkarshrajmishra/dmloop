@@ -1,6 +1,5 @@
-import Navbar from "@/components/Navbar";
 import { SocketProvider } from "@/context/SocketProvider";
-
+import { SessionProvider } from "next-auth/react";
 export default function Layout({
   children,
 }: Readonly<{
@@ -8,7 +7,7 @@ export default function Layout({
 }>) {
   return (
     <SocketProvider>
-      {children}
-      </SocketProvider>
+      <SessionProvider>{children}</SessionProvider>
+    </SocketProvider>
   );
 }

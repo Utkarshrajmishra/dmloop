@@ -38,7 +38,5 @@ export async function handleForm(
     };
   }
 
-  console.log(`${code} ${mode}`)
-
   return { code, mode };
 }
