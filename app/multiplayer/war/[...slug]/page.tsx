@@ -14,9 +14,16 @@ export type WarriorType = {
   socketId: string;
 };
 
+export type ChatTypes = {
+  name: string;
+  msg: string;
+  email: string;
+};
+
 const Page = () => {
   const params = useParams();
   const socket = useSocket();
+  const [chat, setChat] = useState<ChatTypes[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const { data: session } = useSession();
   const [warriors, setWarrior] = useState<WarriorType[]>([]);
@@ -34,26 +41,39 @@ const Page = () => {
         photoUrl: session.user?.image,
       });
       setIsConnected(true);
-    
-    socket?.on("users_updated", handleNewUser);
 
+      socket?.on("users_updated", handleNewUser);
 
-    return () => {
-      if (socket && session?.user?.email && isConnected) {
-        socket.emit("leave_room", {
-          room: params?.slug?.[0],
-          email: session?.user?.email,
-        });
-        socket.off("users_updated", handleNewUser);
-        setIsConnected(false);
-      }
-    }
+      socket?.on("message_recevied", handleNewMsg);
+
+      return () => {
+        if (socket && session?.user?.email && isConnected) {
+          socket.emit("leave_room", {
+            room: params?.slug?.[0],
+            email: session?.user?.email,
+          });
+          socket.off("users_updated", handleNewUser);
+          setIsConnected(false);
+        }
+      };
     }
   }, [params?.slug, socket, session, isConnected]);
 
+  const sendMsg = (msg: string) => {
+    if (socket && session && params.slug)
+      socket?.emit("message_sent", {
+        msg: msg,
+        name: session?.user?.name,
+        room: params?.slug[0],
+        email:session?.user?.email
+      });
+  };
 
-  
-  
+  const handleNewMsg = (msg: ChatTypes[]) => {
+    console.log(msg);
+    setChat(msg);
+  };
+
   return (
     <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
       <div className="w-[80%] lg:w-[70%] items-center">
@@ -84,7 +104,7 @@ const Page = () => {
               {/* Horizontal divider */}
               <div className="w-full h-[0.5px] bg-neutral-800 mt-4"></div>
               <div className="flex gap-2">
-                <Chat />
+                <Chat Chat={chat} userEmail={session?.user?.email} sendMessage={sendMsg} />
                 <WarriorList warriorList={warriors} />
               </div>
             </div>

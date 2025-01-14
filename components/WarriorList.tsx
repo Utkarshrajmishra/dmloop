@@ -13,10 +13,10 @@ const WarriorList = ({warriorList}: WarriorListProps) => {
         <p>Warriors</p>
       </div>
       {
-        <div className="mt-7 auto-y-scroll flex flex-col gap-5">
+        <div className="mt-7 auto-y-scroll flex flex-col gap-6">
           {warriorList
             ? warriorList?.map((item, index) => (
-                <div key={index} className="flex gap-2 text-neutral-200 font-mono">
+                <div key={index} className="flex gap-2 text-neutral-200 font-inter">
                   <Image src={item.photoUrl} alt="User Profile" width={42} height={42} className="rounded-full outline outline-1 outline-blue-200"/>
                   <div>
                     <p className="font-semibold">{item?.name}</p>
