@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { Hash, Copy, CirclePlay, Circle } from "lucide-react";
 import Chat from "@/components/Chat";
 import WarriorList from "@/components/WarriorList";
+import Arena from "@/components/Arena";
 
 export type WarriorType = {
   email: string;
@@ -21,6 +22,7 @@ export type ChatTypes = {
 };
 
 const Page = () => {
+  const [gameStarted,setGameStarted]=useState(false)
   const params = useParams();
   const socket = useSocket();
   const [chat, setChat] = useState<ChatTypes[]>([]);
@@ -46,6 +48,8 @@ const Page = () => {
 
       socket?.on("message_recevied", handleNewMsg);
 
+      socket?.on("game_started",handleStart)
+
       return () => {
         if (socket && session?.user?.email && isConnected) {
           socket.emit("leave_room", {
@@ -58,6 +62,10 @@ const Page = () => {
       };
     }
   }, [params?.slug, socket, session, isConnected]);
+
+  const handleStart=(data:boolean)=>{
+    setGameStarted(true)
+  }
 
   const sendMsg = (msg: string) => {
     if (socket && session && params.slug)
@@ -74,43 +82,56 @@ const Page = () => {
     setChat(msg);
   };
 
+  const handleGameStart=()=>{
+     if(socket &&  params?.slug){
+      socket.emit("start_game", params?.slug[0])
+     }
+  }
+
   return (
     <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
-      <div className="w-[80%] lg:w-[70%] items-center">
-        <div className="mt-20">
-          {params?.slug ? (
-            <div className=" flex flex-col gap-2">
-              <div className="flex  justify-between">
-                <div className="flex items-center gap-3">
-                  <p className="text-3xl text-neutral-200 font-mono font-bold">
-                    {params.slug[0]}
-                  </p>
-                  {/* Vertical divider */}
-                  <div className="w-1 h-8 bg-neutral-200"></div>
-                  <p className="text-3xl flex gap-2 text-neutral-200 font-mono font-bold">
-                    20 Words
-                  </p>
+      { gameStarted?
+        <Arena startGame={gameStarted}/> :
+        <div className="w-[80%] lg:w-[70%] items-center">
+          <div className="mt-20">
+            {params?.slug ? (
+              <div className=" flex flex-col gap-2">
+                <div className="flex  justify-between">
+                  <div className="flex items-center gap-3">
+                    <p className="text-3xl text-neutral-200 font-mono font-bold">
+                      {params.slug[0]}
+                    </p>
+                    {/* Vertical divider */}
+                    <div className="w-1 h-8 bg-neutral-200"></div>
+                    <p className="text-3xl flex gap-2 text-neutral-200 font-mono font-bold">
+                      20 Words
+                    </p>
+                  </div>
+                  <button onClick={handleGameStart} className="flex items-center gap-3 font-semibold text-neutral-200 py-2 px-3 rounded-md font-mono bg-emerald-700 hover:bg-emerald-800">
+                    <CirclePlay className="size-5" />
+                    Get Started
+                  </button>
                 </div>
-                <button className="flex items-center gap-3 font-semibold text-neutral-200 py-2 px-3 rounded-md font-mono bg-emerald-700 hover:bg-emerald-800">
-                  <CirclePlay className="size-5" />
-                  Get Started
-                </button>
+                <div className="text-neutral-400 flex gap-4 items-center mt-2">
+                  <Hash className="size-6" />
+                  <p className="font-mono">Room Code: {params.slug[0]}</p>
+                  <Copy className="size-5 cursor-pointer hover:text-neutral-200" />
+                </div>
+                {/* Horizontal divider */}
+                <div className="w-full h-[0.5px] bg-neutral-800 mt-4"></div>
+                <div className="flex gap-2">
+                  <Chat
+                    Chat={chat}
+                    userEmail={session?.user?.email}
+                    sendMessage={sendMsg}
+                  />
+                  <WarriorList warriorList={warriors} />
+                </div>
               </div>
-              <div className="text-neutral-400 flex gap-4 items-center mt-2">
-                <Hash className="size-6" />
-                <p className="font-mono">Room Code: {params.slug[0]}</p>
-                <Copy className="size-5 cursor-pointer hover:text-neutral-200" />
-              </div>
-              {/* Horizontal divider */}
-              <div className="w-full h-[0.5px] bg-neutral-800 mt-4"></div>
-              <div className="flex gap-2">
-                <Chat Chat={chat} userEmail={session?.user?.email} sendMessage={sendMsg} />
-                <WarriorList warriorList={warriors} />
-              </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
         </div>
-      </div>
+      }
     </section>
   );
 };

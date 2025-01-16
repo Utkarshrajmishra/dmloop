@@ -14,7 +14,7 @@ import FinalResult from "@/components/FinalResult";
 const Practice = () => {
   const [wordCount, setWordCount] = useState<number>(20);
   const { words } = useWords(wordCount);
-  const { typed, timer, resetGame, currentState, errors } = useEngine(words);
+  const { typed, timer, resetGame, currentState, errors } = useEngine(words,"practice",false);
   const { wpmHistory, latestWPM } = useWPM(typed, timer, currentState);
 
   const containerVariants = {
