@@ -76,6 +76,7 @@ const Arena=({startGame}:ArenaProps)=>{
               className="absolute w-[100%] mt-12"
             >
               <FinalResult
+              multiplayer={true}
                 currentState={currentState}
                 resetGame={resetGame}
                 totalWPM={latestWPM}

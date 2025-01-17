@@ -54,7 +54,7 @@ const useEngine = (word: string, mode: string, multiplayerWar: boolean) => {
     if (currentState === "run" && typed.length >= word.length) {
       setCurrentState("finish");
     }
-  }, [typed.length, word.length, currentState, sumErrors]);
+  }, [typed.length, word.length, currentState, sumErrors, timer]);
 
   const resetGame = useCallback(() => {
     setCurrentState("start");

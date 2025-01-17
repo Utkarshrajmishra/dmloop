@@ -22,7 +22,7 @@ export type ChatTypes = {
 };
 
 const Page = () => {
-  const [gameStarted,setGameStarted]=useState(false)
+  const [gameStarted, setGameStarted] = useState(false);
   const params = useParams();
   const socket = useSocket();
   const [chat, setChat] = useState<ChatTypes[]>([]);
@@ -48,7 +48,7 @@ const Page = () => {
 
       socket?.on("message_recevied", handleNewMsg);
 
-      socket?.on("game_started",handleStart)
+      socket?.on("game_started", handleStart);
 
       return () => {
         if (socket && session?.user?.email && isConnected) {
@@ -56,6 +56,8 @@ const Page = () => {
             room: params?.slug?.[0],
             email: session?.user?.email,
           });
+          socket.off("message_recevied", handleNewMsg);
+          socket.on("game_started", handleStart);
           socket.off("users_updated", handleNewUser);
           setIsConnected(false);
         }
@@ -63,9 +65,9 @@ const Page = () => {
     }
   }, [params?.slug, socket, session, isConnected]);
 
-  const handleStart=(data:boolean)=>{
-    setGameStarted(true)
-  }
+  const handleStart = (data: boolean) => {
+    setGameStarted(true);
+  };
 
   const sendMsg = (msg: string) => {
     if (socket && session && params.slug)
@@ -73,7 +75,7 @@ const Page = () => {
         msg: msg,
         name: session?.user?.name,
         room: params?.slug[0],
-        email:session?.user?.email
+        email: session?.user?.email,
       });
   };
 
@@ -82,16 +84,17 @@ const Page = () => {
     setChat(msg);
   };
 
-  const handleGameStart=()=>{
-     if(socket &&  params?.slug){
-      socket.emit("start_game", params?.slug[0])
-     }
-  }
+  const handleGameStart = () => {
+    if (socket && params?.slug) {
+      socket.emit("start_game", params?.slug[0]);
+    }
+  };
 
   return (
     <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
-      { gameStarted?
-        <Arena startGame={gameStarted}/> :
+      {gameStarted ? (
+        <Arena startGame={gameStarted} />
+      ) : (
         <div className="w-[80%] lg:w-[70%] items-center">
           <div className="mt-20">
             {params?.slug ? (
@@ -104,10 +107,13 @@ const Page = () => {
                     {/* Vertical divider */}
                     <div className="w-1 h-8 bg-neutral-200"></div>
                     <p className="text-3xl flex gap-2 text-neutral-200 font-mono font-bold">
-                      20 Words
+                      20 Words - 30 Seconds
                     </p>
                   </div>
-                  <button onClick={handleGameStart} className="flex items-center gap-3 font-semibold text-neutral-200 py-2 px-3 rounded-md font-mono bg-emerald-700 hover:bg-emerald-800">
+                  <button
+                    onClick={handleGameStart}
+                    className="flex items-center gap-3 font-semibold text-neutral-200 py-2 px-3 rounded-md font-mono bg-emerald-700 hover:bg-emerald-800"
+                  >
                     <CirclePlay className="size-5" />
                     Get Started
                   </button>
@@ -131,7 +137,7 @@ const Page = () => {
             ) : null}
           </div>
         </div>
-      }
+      )}
     </section>
   );
 };
