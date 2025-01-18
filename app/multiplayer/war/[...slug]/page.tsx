@@ -13,6 +13,9 @@ export type WarriorType = {
   name: string;
   photoUrl: string;
   socketId: string;
+  wpm: number,
+  error:number,
+  time:number,
 };
 
 export type ChatTypes = {
@@ -50,6 +53,8 @@ const Page = () => {
 
       socket?.on("game_started", handleStart);
 
+      socket?.on("score_updated", handleScoreUpdate);
+
       return () => {
         if (socket && session?.user?.email && isConnected) {
           socket.emit("leave_room", {
@@ -64,6 +69,10 @@ const Page = () => {
       };
     }
   }, [params?.slug, socket, session, isConnected]);
+
+  const handleScoreUpdate=(warriors: WarriorType[])=>{
+    setWarrior(warriors)
+  }
 
   const handleStart = (data: boolean) => {
     setGameStarted(true);
