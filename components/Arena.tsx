@@ -4,23 +4,36 @@ import useEngine from "@/hooks/useEngine";
 import useWords from "@/hooks/useWord";
 import useWPM from "@/hooks/useWPM";
 import { calculateAccuracyPercentage } from "@/lib/utils";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import FinalResult from "./FinalResult";
 import { motion } from "framer-motion";
 import UserTyping from "./UserTyping";
 import Result from "./Result";
 
-type ArenaProps={
-    startGame:boolean
-}
+type ArenaProps = {
+  startGame: boolean;
+  handleGameEnd: (wpm: number, error: number, time: number) => void;
+};
 
-const Arena=({startGame}:ArenaProps)=>{
+const Arena=({startGame, handleGameEnd}:ArenaProps)=>{
 
+      const [dataSend, setDataSend]=useState(false)
       const [wordCount, setWordCount] = useState<number>(30);
       const { words } = useWords(wordCount);
       const { typed, timer, resetGame, currentState, errors } =
         useEngine(words, "arena",true);
       const { wpmHistory, latestWPM } = useWPM(typed, timer, currentState);
+
+      useEffect(()=>{
+          if(currentState==='finish' && !dataSend){
+            handleGameEnd(
+              latestWPM,
+              calculateAccuracyPercentage(errors, words.length),
+              timer
+            );
+            setDataSend(true)
+          }
+      },[currentState])
 
         const containerVariants = {
           hidden: {

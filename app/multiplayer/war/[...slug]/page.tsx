@@ -85,15 +85,21 @@ const Page = () => {
   };
 
   const handleGameStart = () => {
-    if (socket && params?.slug) {
+    if (socket && params?.slug && session) {
       socket.emit("start_game", params?.slug[0]);
     }
   };
 
+  const handleGameEnd=(wpm: number, error: number, time:number)=>{
+    if(socket && params?.slug && session){
+      socket.emit("game_completed",{wpm:wpm, error:error, time:time, room:params?.slug[0], email:session?.user?.email});
+    }
+  }
+
   return (
     <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
       {gameStarted ? (
-        <Arena startGame={gameStarted} />
+        <Arena handleGameEnd={handleGameEnd} startGame={gameStarted} />
       ) : (
         <div className="w-[80%] lg:w-[70%] items-center">
           <div className="mt-20">

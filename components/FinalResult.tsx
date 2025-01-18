@@ -15,6 +15,7 @@ export type FinalResultProps = {
 };
 
 const FinalResult = ({
+  totalWPM,
   multiplayer,
   currentState,
   resetGame,
@@ -71,7 +72,7 @@ const FinalResult = ({
               <p className="text-sm font-medium text-neutral-400 uppercase">
                 WPM
               </p>
-              <p className="font-bold text-2xl text-neutral-200">{`${accuracy}`}</p>
+              <p className="font-bold text-2xl text-neutral-200">{`${totalWPM}`}</p>
             </div>
           </div>
         </div>
