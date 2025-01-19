@@ -1,3 +1,4 @@
+import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
 import { WPMType } from "@/hooks/useWPM";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -33,3 +34,13 @@ export const calculateWPMAverage=(wpmHistory: WPMType[])=>{
     return Math.round(totalWPM/wpmHistory.length)
 }
 
+
+export const sortUser=(users: WarriorType[])=>{
+  return users.sort((a,b)=>{
+    if(a.wpm ===0 && b.wpm!==0) return -1;
+    if(b.wpm===0 && a.wpm!==0) return -1;
+    if(b.wpm!==a.wpm) return b.wpm-a.wpm;
+    if(a.error!==b.error) return a.error -b.error;
+    return a.time-b.time;
+  })
+}

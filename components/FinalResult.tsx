@@ -46,7 +46,7 @@ const FinalResult = ({
 
   return (
     <>
-      <div className="flex justify-center gap-6 h-[100vh] flex-col items-center">
+      <div className={`flex justify-center gap-6 ${multiplayer?'h-fit' : 'h-[100vh]'} flex-col items-center`}>
         <div className="flex md:w-[80%] lg:w-[60%] justify-between">
           <div className="rounded-xl  w-[250px] gap-3 border text-card-foreground  shadow bg-neutral-900/50 border-neutral-800 transition-all duration-300 hover:shadow-lg hover:bg-neutral-800/50 flex items-center py-6 px-9">
             <Target className="size-8 text-purple-500" />

@@ -9,13 +9,19 @@ import FinalResult from "./FinalResult";
 import { motion } from "framer-motion";
 import UserTyping from "./UserTyping";
 import Result from "./Result";
+import { Button } from "./ui/button";
+import { Trophy } from "lucide-react";
+import { DrawerCard } from "./Drawer";
+import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
 
 type ArenaProps = {
+  users: WarriorType[]
+  handleGetScore:()=>void;
   startGame: boolean;
   handleGameEnd: (wpm: number, error: number, time: number) => void;
 };
 
-const Arena=({startGame, handleGameEnd}:ArenaProps)=>{
+const Arena=({users,handleGetScore,startGame, handleGameEnd}:ArenaProps)=>{
 
       const [dataSend, setDataSend]=useState(false)
       const [wordCount, setWordCount] = useState<number>(30);
@@ -34,6 +40,13 @@ const Arena=({startGame, handleGameEnd}:ArenaProps)=>{
             setDataSend(true)
           }
       },[currentState])
+
+
+      useEffect(()=>{
+        if(timer===30){
+          handleGetScore()
+        }
+      },[timer])
 
         const containerVariants = {
           hidden: {
@@ -56,7 +69,6 @@ const Arena=({startGame, handleGameEnd}:ArenaProps)=>{
         <section className="relative bg-gradient-to-b from-neutral-900 to-black min-h-[100vh] w-[100%] flex items-center justify-center">
           {currentState != "finish" ? (
             <div className=" absolute max-w-4xl px-4 text-center md:text-left">
-             
               <div className="flex flex-col gap-8  items-center">
                 {currentState == "run" && (
                   <Result
@@ -86,10 +98,10 @@ const Arena=({startGame, handleGameEnd}:ArenaProps)=>{
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="absolute w-[100%] mt-12"
+              className=" min-w-[100%] mt-16"
             >
               <FinalResult
-              multiplayer={true}
+                multiplayer={true}
                 currentState={currentState}
                 resetGame={resetGame}
                 totalWPM={latestWPM}
@@ -97,6 +109,9 @@ const Arena=({startGame, handleGameEnd}:ArenaProps)=>{
                 accuracy={calculateAccuracyPercentage(errors, words.length)}
                 wpmHistory={wpmHistory}
               />
+              <div className=" mt-4 flex items-center justify-center">
+                <DrawerCard users={users}/>
+              </div>
             </motion.div>
           )}
         </section>

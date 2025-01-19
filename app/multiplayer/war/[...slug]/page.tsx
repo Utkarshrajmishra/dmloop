@@ -7,6 +7,7 @@ import { Hash, Copy, CirclePlay, Circle } from "lucide-react";
 import Chat from "@/components/Chat";
 import WarriorList from "@/components/WarriorList";
 import Arena from "@/components/Arena";
+import { sortUser } from "@/lib/utils";
 
 export type WarriorType = {
   email: string;
@@ -53,7 +54,7 @@ const Page = () => {
 
       socket?.on("game_started", handleStart);
 
-      socket?.on("score_updated", handleScoreUpdate);
+      socket?.on("scores", handleScoreUpdate);
 
       return () => {
         if (socket && session?.user?.email && isConnected) {
@@ -71,8 +72,16 @@ const Page = () => {
   }, [params?.slug, socket, session, isConnected]);
 
   const handleScoreUpdate=(warriors: WarriorType[])=>{
-    setWarrior(warriors)
+    const users=sortUser(warriors)
+    setWarrior(users)
   }
+
+  const handleGetScore=()=>{
+    if(socket && session && params.slug){
+      socket?.emit("send_score",params?.slug[0]);
+    }
+  }
+
 
   const handleStart = (data: boolean) => {
     setGameStarted(true);
@@ -108,7 +117,12 @@ const Page = () => {
   return (
     <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
       {gameStarted ? (
-        <Arena handleGameEnd={handleGameEnd} startGame={gameStarted} />
+        <Arena
+          users={warriors}
+          handleGetScore={handleGetScore}
+          handleGameEnd={handleGameEnd}
+          startGame={gameStarted}
+        />
       ) : (
         <div className="w-[80%] lg:w-[70%] items-center">
           <div className="mt-20">
