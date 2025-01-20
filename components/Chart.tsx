@@ -50,7 +50,7 @@ const Chart = ({ wpmHistory }: ChartProps) => {
   return (
     <div className="h-[350px] md:w-[80%] lg:w-[60%] rounded-xl bg-neutral-900/50 border-neutral-800 border p-2  items-center justify-center  text-[1rem] text-neutral-400">
       <p className="text-sm font-medium text-neutral-400 text-center uppercase">
-        Performace Analysis
+      Your  Performace Analysis
       </p>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart

@@ -110,6 +110,7 @@ const Page = () => {
 
   const handleGameEnd=(wpm: number, error: number, time:number)=>{
     if(socket && params?.slug && session){
+      console.log('emit')
       socket.emit("game_completed",{wpm:wpm, error:error, time:time, room:params?.slug[0], email:session?.user?.email});
     }
   }

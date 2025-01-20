@@ -110,7 +110,7 @@ const Arena=({users,handleGetScore,startGame, handleGameEnd}:ArenaProps)=>{
                 wpmHistory={wpmHistory}
               />
               <div className=" mt-4 flex items-center justify-center">
-                <DrawerCard users={users}/>
+                <DrawerCard users={users} timer={timer}/>
               </div>
             </motion.div>
           )}

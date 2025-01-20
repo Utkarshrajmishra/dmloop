@@ -1,3 +1,5 @@
+"use server"
+
 import { auth } from "@/auth";
 import ArenaCard from "@/components/ArenaCard";
 import { Button } from "@/components/ui/button";
@@ -5,7 +7,8 @@ import { Swords } from "lucide-react";
 
 const Multiplayer =async() => {
   const session= await auth()
-  
+
+ 
   return (
     <section className=" bg-gradient-to-b from-neutral-900 to-black min-h-[100vh] w-[100%] flex justify-center">
       <div className="w-[80%] lg:w-[70%] items-center">
@@ -18,13 +21,13 @@ const Multiplayer =async() => {
           </p>
           <div className="flex gap-6 mt-8">
             <ArenaCard
-              session={session?.id }
+              session={session?.id}
               title={"Create Arena"}
               showSelectors={true}
               buttonText="Create Arena"
             />
             <ArenaCard
-            session={session?.id}
+              session={session?.id}
               title={"Join Arena"}
               showSelectors={false}
               buttonText="Join Arena"
@@ -53,7 +56,7 @@ const Multiplayer =async() => {
                   sec
                 </p>
               </div>
-              <Button  className="px-8 bg-emerald-700 hover:bg-emerald-800 text-neutral-200 font-mono">
+              <Button className="px-8 bg-emerald-700 hover:bg-emerald-800 text-neutral-200 font-mono">
                 Comming Soon
               </Button>
             </div>
