@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSocket } from "@/context/SocketProvider";
 import { useParams } from "next/navigation";
-import { Hash, Copy, CirclePlay, Circle } from "lucide-react";
+import { Hash, Copy, CirclePlay} from "lucide-react";
 import Chat from "@/components/Chat";
 import WarriorList from "@/components/WarriorList";
 import Arena from "@/components/Arena";
@@ -97,16 +97,16 @@ const Page = () => {
       });
   };
 
-  const handleNewMsg = (msg: ChatTypes[]) => {
+  const handleNewMsg = useCallback((msg: ChatTypes[]) => {
     console.log(msg);
     setChat(msg);
-  };
+  },[]);
 
-  const handleGameStart = () => {
+  const handleGameStart = useCallback(() => {
     if (socket && params?.slug && session) {
       socket.emit("start_game", params?.slug[0]);
     }
-  };
+  },[]);
 
   const handleGameEnd=(wpm: number, error: number, time:number)=>{
     if(socket && params?.slug && session){
@@ -122,7 +122,6 @@ const Page = () => {
           users={warriors}
           handleGetScore={handleGetScore}
           handleGameEnd={handleGameEnd}
-          startGame={gameStarted}
         />
       ) : (
         <div className="w-[80%] lg:w-[70%] items-center">

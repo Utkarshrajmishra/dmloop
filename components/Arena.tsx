@@ -9,19 +9,16 @@ import FinalResult from "./FinalResult";
 import { motion } from "framer-motion";
 import UserTyping from "./UserTyping";
 import Result from "./Result";
-import { Button } from "./ui/button";
-import { Trophy } from "lucide-react";
 import { DrawerCard } from "./Drawer";
 import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
 
 type ArenaProps = {
   users: WarriorType[]
   handleGetScore:()=>void;
-  startGame: boolean;
   handleGameEnd: (wpm: number, error: number, time: number) => void;
 };
 
-const Arena=({users,handleGetScore,startGame, handleGameEnd}:ArenaProps)=>{
+const Arena=({users,handleGetScore, handleGameEnd}:ArenaProps)=>{
 
       const [dataSend, setDataSend]=useState(false)
       const [wordCount, setWordCount] = useState<number>(30);

@@ -7,6 +7,7 @@ import { Swords } from "lucide-react";
 
 const Multiplayer =async() => {
   const session= await auth()
+  console.log(session)
 
  
   return (
@@ -21,13 +22,11 @@ const Multiplayer =async() => {
           </p>
           <div className="flex gap-6 mt-8">
             <ArenaCard
-              session={session?.id}
               title={"Create Arena"}
               showSelectors={true}
               buttonText="Create Arena"
             />
             <ArenaCard
-              session={session?.id}
               title={"Join Arena"}
               showSelectors={false}
               buttonText="Join Arena"

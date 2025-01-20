@@ -13,11 +13,9 @@ type ArenaCardProps = {
   title: string;
   showSelectors: boolean;
   buttonText: string;
-  session: string | undefined;
 };
 
 const ArenaCard = ({
-  session,
   title,
   showSelectors = false,
   buttonText,
