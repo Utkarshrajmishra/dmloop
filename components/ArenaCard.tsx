@@ -44,8 +44,7 @@ const ArenaCard = ({
           />
           {state?.error?.code && <p className="text-[0.89rem] text-red-500">{state.error.code}</p>}
         </div>
-        {showSelectors && (
-          <div className="flex gap-4">
+          <div className={`flex gap-4 ${showSelectors?'':'hidden'}`}>
             <Selector title="War Type" options={modes} />
             <Selector
               id="mode"
@@ -54,7 +53,6 @@ const ArenaCard = ({
               options={options}
             />
           </div>
-        )}
         <Button
           type="submit"
           className={

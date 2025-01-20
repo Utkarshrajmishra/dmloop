@@ -1,10 +1,12 @@
 import { z } from "zod";
+import { redirect } from "next/navigation";
+
 
 const ArenaSchema = z.object({
   code: z
     .string()
-    .min(3, { message: "Should be atleast 3 characters long" })
-    .max(8, { message: "Should not be more than 8 characters long" })
+    .min(5, { message: "Should be 5 characters long" })
+    .max(5, { message: "Should not be more than 5 characters long" })
     .trim(),
   mode: z.string().default("20").optional(),
 });
@@ -37,6 +39,6 @@ export async function handleForm(
       error: validatedFields.error.flatten().fieldErrors,
     };
   }
-
-  return { code, mode };
+  console.log(code)
+    redirect(`/multiplayer/war/${code}`);
 }
