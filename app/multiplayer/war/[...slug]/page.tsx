@@ -97,16 +97,16 @@ const Page = () => {
       });
   };
 
-  const handleNewMsg = useCallback((msg: ChatTypes[]) => {
+  const handleNewMsg = (msg: ChatTypes[]) => {
     console.log(msg);
     setChat(msg);
-  },[]);
+  };
 
-  const handleGameStart = useCallback(() => {
+  const handleGameStart = () => {
     if (socket && params?.slug && session) {
       socket.emit("start_game", params?.slug[0]);
     }
-  },[]);
+  };
 
   const handleGameEnd=(wpm: number, error: number, time:number)=>{
     if(socket && params?.slug && session){
