@@ -1,17 +1,26 @@
 "use client";
-
 import useSWR from "swr";
+import { Crown } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
+import { Input } from "./ui/input";
+import { useEffect, useState } from "react";
 
-interface User {
-  id: number;
+type User = {
+  id: string;
   name: string;
   email: string;
   averageWPM: number;
   averageAccuracy: number;
   totalTime: number;
-}
+};
 
-// Fetcher function to get users
 const fetcher = async (url: string): Promise<User[]> => {
   const response = await fetch(url, {
     method: "GET",
@@ -19,41 +28,98 @@ const fetcher = async (url: string): Promise<User[]> => {
       "Content-Type": "application/json",
     },
   });
-
   if (!response.ok) {
-    throw new Error(`Failed to fetch users: ${response.statusText}`);
+    throw new Error(response.statusText);
   }
-
   return response.json();
 };
 
-const LeaderBoard = () => {
+const LeaderTable = () => {
+  const [timer, setTimer]=useState(30)
+  const [search, setSearch]=useState('')
   const {
     data: users,
     error,
     isValidating,
   } = useSWR<User[]>("/api/db/getUsers", fetcher, {
-    refreshInterval: 30000, 
+    refreshInterval: 30000,
     revalidateOnFocus: true,
   });
 
-  if (error) return <div>Error loading data: {error.message}</div>;
-  if (!users) return <div>Loading...</div>;
+  // useEffect(()=>{
+  //     if(isValidating || timer===0) setTimer(30)
+
+  //   const id=setInterval(()=>{
+  //     if(timer===0) return;
+  //     setTimer(prev=> prev-1)
+  //   },1000)
+
+  //   return ()=> clearInterval(id)
+  // },[users])
+
 
   return (
-    <div>
-      <h1>Leaderboard</h1>
-      {isValidating && <p>Updating...</p>}
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} - WPM: {user.averageWPM} - Accuracy:{" "}
-            {user.averageAccuracy}% - Total Time: {user.totalTime}s
-          </li>
-        ))}
-      </ul>
+    <div className="w-full font-inter flex flex-col items-center justify-center gap-5">
+      <div className="flex flex-col items-center">
+        <p className="text-zinc-200 text-center flex gap-1 font-semibold text-xl">
+          <Crown className="text-yellow-400" />
+          Leaderboard
+        </p>
+        <p className="text-neutral-400 text-sm mt-1">
+          This page refreshes in every 30 seconds 
+        </p>
+      </div>
+      <Input
+        value={search}
+        onChange={(e)=>setSearch(e.target.value)}
+        type="text"
+        placeholder="Search by name..."
+        className="flex h-9 font-inter w-full rounded-md border px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-neutral-800 border-neutral-700 text-neutral-200 placeholder-neutral-400"
+      />
+      <Table>
+        <TableHeader>
+          <TableRow className="border-b border-neutral-800 rounded-xl bg-neutral-900 hover:bg-neutral-900">
+            <TableHead className="text-sm font-medium text-neutral-200 uppercase">
+              Rank
+            </TableHead>
+            <TableHead className="text-sm font-medium text-neutral-200 uppercase">
+              Name
+            </TableHead>
+            <TableHead className="text-sm font-medium text-neutral-200 uppercase">
+              WPM
+            </TableHead>
+            <TableHead className="text-sm font-medium text-neutral-200 uppercase">
+              Accuracy
+            </TableHead>
+            <TableHead className="text-sm font-medium text-neutral-200 uppercase">
+              Time
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users &&
+            users.filter((item)=>item.name.toLowerCase().includes(search.toLowerCase())).map((item, index) => (
+              <TableRow
+                key={item.id || index}
+                className="border-neutral-300 hover:bg-neutral-900"
+              >
+                <TableCell className="text-neutral-200">{index + 1}</TableCell>
+                <TableCell className="text-neutral-200">{item.name}</TableCell>
+                <TableCell className="text-neutral-200">
+                  {item.averageWPM}
+                </TableCell>
+                <TableCell className="text-neutral-200">
+                  {item.averageAccuracy}%
+                </TableCell>
+                <TableCell className="text-neutral-200">
+                  {item.totalTime} seconds
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };
 
-export default LeaderBoard;
+export default LeaderTable;
