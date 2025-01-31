@@ -10,6 +10,7 @@ const Dashboard = async ({
 }) => {
   const session = await auth();
   const { userId } = await params;
+
   return (
     <section className="relative bg-gradient-to-b from-neutral-900 to-black min-h-[100vh] min-w-[100%] flex items-center justify-center font-mono">
       <div className="flex flex-col gap-6 mt-14 pb-6">
