@@ -22,7 +22,7 @@ export function Alert({state, setState}: AlertProps) {
   }
   return (
     <AlertDialog open={state}>
-      <AlertDialogContent className="bg-neutral-950 text-white">
+      <AlertDialogContent className="bg-neutral-950 text-white border-none outline outline-1 outline-neutral-700">
         <AlertDialogHeader>
           <AlertDialogTitle>Login is required!</AlertDialogTitle>
           <AlertDialogDescription className="text-zinc-400">

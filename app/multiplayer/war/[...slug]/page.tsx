@@ -33,7 +33,7 @@ const Page = () => {
   const [alert, setAlert]=useState(false)
   const [chat, setChat] = useState<ChatTypes[]>([]);
   const [isConnected, setIsConnected] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [warriors, setWarrior] = useState<WarriorType[]>([]);
 
   const handleNewUser = (user: WarriorType[]) => {
@@ -41,10 +41,10 @@ const Page = () => {
   };
 
   useEffect(()=>{
-    if(!session ){
-      setAlert(true)
+    if (status == "unauthenticated") {
+      setAlert(true);
     }
-  },[session])
+  },[session,status])
 
   useEffect(() => {
     if (params?.slug && socket && session && !isConnected) {
