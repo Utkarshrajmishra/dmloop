@@ -8,6 +8,7 @@ import Chat from "@/components/Chat";
 import WarriorList from "@/components/WarriorList";
 import Arena from "@/components/Arena";
 import { sortUser } from "@/lib/utils";
+import { Alert } from "@/components/Alert";
 
 export type WarriorType = {
   email: string;
@@ -29,6 +30,7 @@ const Page = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const params = useParams();
   const socket = useSocket();
+  const [alert, setAlert]=useState(false)
   const [chat, setChat] = useState<ChatTypes[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const { data: session } = useSession();
@@ -37,6 +39,12 @@ const Page = () => {
   const handleNewUser = (user: WarriorType[]) => {
     setWarrior(user);
   };
+
+  useEffect(()=>{
+    if(!session ){
+      setAlert(true)
+    }
+  },[session])
 
   useEffect(() => {
     if (params?.slug && socket && session && !isConnected) {
@@ -116,7 +124,7 @@ const Page = () => {
   }
 
   return (
-    <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
+    <>    <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
       {gameStarted ? (
         <Arena
           users={warriors}
@@ -168,6 +176,9 @@ const Page = () => {
         </div>
       )}
     </section>
+    <Alert state={alert} setState={setAlert}/>
+    </>
+
   );
 };
 
