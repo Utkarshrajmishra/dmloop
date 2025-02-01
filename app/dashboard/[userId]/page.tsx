@@ -2,6 +2,25 @@ import { auth } from "@/auth";
 import LeaderTable from "@/components/LeaderTable";
 import { Gauge, Hourglass, Target } from "lucide-react";
 import Image from "next/image";
+import { use } from "react";
+import { redirect } from "next/navigation";
+
+const fetchData=async(userId: string)=>{
+    try{
+  const response=await fetch(`/api/db/getUser?userId=${userId}`,{
+      method:'GET',
+      cache:'no-store'
+    })
+    if(!response.ok){
+      throw new Error('Failed to fetch')
+    }
+    return response.json()
+    }
+    catch(error){
+      console.log(error)
+      return null
+    }
+}
 
 const Dashboard = async ({
   params,
@@ -9,7 +28,10 @@ const Dashboard = async ({
   params: Promise<{ userId: string }>;
 }) => {
   const session = await auth();
-  const { userId } = await params;
+  if(!session?.id)return redirect('/')
+  const userData=use(fetchData(session?.id))
+
+  console.log(userDataF)
   return (
     <section className="relative bg-gradient-to-b from-neutral-900 to-black min-h-[100vh] min-w-[100%] flex items-center justify-center font-mono">
       <div className="flex flex-col gap-6 mt-14 pb-6">

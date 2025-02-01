@@ -3,7 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const id = await req.json();
+    const id = req.nextUrl.searchParams.get("userId");
+    
+    if(!id){
+        return new Response(JSON.stringify({ error: "User ID is reqiured" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        });
+    }
 
     const score = await prisma.score.findMany({
       where: {
