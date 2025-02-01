@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {signOut } from "@/auth";
+import {auth, signOut } from "@/auth";
 import Link from "next/link";
 
 type session = {
@@ -19,6 +19,7 @@ type session = {
     image?: string | null;
   };
   expires: string | null;
+  id: string | null;
 };
 
 const Profile = async({ session }: { session: session }) => {
@@ -51,7 +52,7 @@ const Profile = async({ session }: { session: session }) => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Database className="mr-2 h-4 w-4" />
-              <Link href="/profile">
+              <Link href={`/dashboard/${session.id}`}>
                <p>Dashboard</p>
               </Link>
             </DropdownMenuItem>

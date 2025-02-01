@@ -45,7 +45,6 @@ export async function GET(req: NextRequest) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error fetching scores:", error);
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },

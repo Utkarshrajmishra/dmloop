@@ -106,10 +106,10 @@ const LeaderTable = () => {
                 <TableCell className="text-neutral-200">{index + 1}</TableCell>
                 <TableCell className="text-neutral-200">{item.name}</TableCell>
                 <TableCell className="text-neutral-200">
-                  {item.averageWPM}
+                  {Math.ceil(item.averageWPM)}
                 </TableCell>
                 <TableCell className="text-neutral-200">
-                  {item.averageAccuracy}%
+                  {parseFloat(item.averageAccuracy.toFixed(2))}%
                 </TableCell>
                 <TableCell className="text-neutral-200">
                   {item.totalTime} seconds

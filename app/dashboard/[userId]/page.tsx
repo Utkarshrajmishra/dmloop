@@ -10,7 +10,6 @@ const Dashboard = async ({
 }) => {
   const session = await auth();
   const { userId } = await params;
-
   return (
     <section className="relative bg-gradient-to-b from-neutral-900 to-black min-h-[100vh] min-w-[100%] flex items-center justify-center font-mono">
       <div className="flex flex-col gap-6 mt-14 pb-6">
@@ -34,7 +33,7 @@ const Dashboard = async ({
             <Target className="size-8 text-purple-500" />
             <div className="flex flex-col gap-1">
               <p className="text-sm font-medium text-neutral-400 uppercase">
-                ACCURACY
+               average wpm
               </p>
               <p className="font-bold text-2xl text-neutral-200">10%</p>
             </div>
@@ -44,7 +43,7 @@ const Dashboard = async ({
 
             <div className="flex flex-col gap-1">
               <p className="text-sm font-medium text-neutral-400 uppercase">
-                ACCURACY
+               average ACCURACY
               </p>
               <p className="font-bold text-2xl text-neutral-200">10%</p>
             </div>
@@ -53,7 +52,7 @@ const Dashboard = async ({
             <Gauge className="size-8 text-emerald-500" />
             <div className="flex flex-col gap-1">
               <p className="text-sm font-medium text-neutral-400 uppercase">
-                ACCURACY
+              total time
               </p>
               <p className="font-bold text-2xl text-neutral-200">10%</p>
             </div>
