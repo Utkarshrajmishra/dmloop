@@ -2,12 +2,20 @@ import { auth } from "@/auth";
 import LeaderTable from "@/components/LeaderTable";
 import { Gauge, Hourglass, Target } from "lucide-react";
 import Image from "next/image";
-import { use } from "react";
 import { redirect } from "next/navigation";
+
+export type UserDashboardTypes={
+  id:string,
+  averageAccuracy:number,
+  averageWPM:number,
+  date:string,
+  totalTime:number,
+  userid:string,
+}
 
 const fetchData=async(userId: string)=>{
     try{
-  const response=await fetch(`/api/db/getUser?userId=${userId}`,{
+  const response=await fetch(`http://localhost:3000/api/db/getUser?userId=${userId}`,{
       method:'GET',
       cache:'no-store'
     })
@@ -29,11 +37,9 @@ const Dashboard = async ({
 }) => {
   const session = await auth();
   if(!session?.id)return redirect('/')
-  const userData=use(fetchData(session?.id))
-
-  console.log(userDataF)
+  const data: UserDashboardTypes[]=await fetchData(session?.id)
   return (
-    <section className="relative bg-gradient-to-b from-neutral-900 to-black min-h-[100vh] min-w-[100%] flex items-center justify-center font-mono">
+    <section className="relative overflow-hidden bg-gradient-to-b from-neutral-900 to-black h-[100vh] w-[100%] flex items-center justify-center font-mono">
       <div className="flex flex-col gap-6 mt-14 pb-6">
         <div className="mt-5 flex items-center gap-6 rounded-full">
           <Image
@@ -76,7 +82,7 @@ const Dashboard = async ({
               <p className="text-sm font-medium text-neutral-400 uppercase">
               total time
               </p>
-              <p className="font-bold text-2xl text-neutral-200">10%</p>
+              <p className="font-bold text-2xl text-neutral-200">{data[data.length-1].totalTime} secs</p>
             </div>
           </div>
         </div>

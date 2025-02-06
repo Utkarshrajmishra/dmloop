@@ -1,3 +1,4 @@
+import { UserDashboardTypes } from "@/app/dashboard/[userId]/page";
 import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
 import { WPMType } from "@/hooks/useWPM";
 import { clsx, type ClassValue } from "clsx"
@@ -43,4 +44,16 @@ export const sortUser=(users: WarriorType[])=>{
     if(a.error!==b.error) return a.error -b.error;
     return a.time-b.time;
   })
+}
+
+export const calculateAverage=(data:UserDashboardTypes[])=>{
+  if(data.length==0) return 0;
+  let sumWPM=0, sumAccuracy=0;
+  for(let i=0;i<data.length;i++){
+    sumWPM+=data[i].averageWPM
+    sumAccuracy+=data[i].averageAccuracy
+  }
+  sumAccuracy=parseFloat((sumAccuracy/data.length).toFixed(2))
+  sumWPM=Math.ceil(sumWPM/data.length)
+  return {sumAccuracy, sumWPM}
 }
