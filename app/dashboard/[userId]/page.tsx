@@ -1,8 +1,14 @@
 import { auth } from "@/auth";
 import LeaderTable from "@/components/LeaderTable";
+import { calculateAverage } from "@/lib/utils";
 import { Gauge, Hourglass, Target } from "lucide-react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+
+export type dataAverageTypes = {
+  sumAccuracy: number;
+  sumWPM:number;
+};
 
 export type UserDashboardTypes={
   id:string,
@@ -38,6 +44,8 @@ const Dashboard = async ({
   const session = await auth();
   if(!session?.id)return redirect('/')
   const data: UserDashboardTypes[]=await fetchData(session?.id)
+ const averageData: dataAverageTypes=calculateAverage(data)
+ console.log(averageData)
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-neutral-900 to-black h-[100vh] w-[100%] flex items-center justify-center font-mono">
       <div className="flex flex-col gap-6 mt-14 pb-6">
@@ -63,7 +71,7 @@ const Dashboard = async ({
               <p className="text-sm font-medium text-neutral-400 uppercase">
                average wpm
               </p>
-              <p className="font-bold text-2xl text-neutral-200">10%</p>
+              <p className="font-bold text-2xl text-neutral-200">{averageData.sumWPM}</p>
             </div>
           </div>
           <div className="rounded-xl  w-[300px] gap-3 border text-card-foreground  shadow bg-neutral-900/50 border-neutral-800 transition-all duration-300 hover:shadow-lg hover:bg-neutral-800/50 flex items-center py-6 px-9">
@@ -73,7 +81,7 @@ const Dashboard = async ({
               <p className="text-sm font-medium text-neutral-400 uppercase">
                average ACCURACY
               </p>
-              <p className="font-bold text-2xl text-neutral-200">10%</p>
+              <p className="font-bold text-2xl text-neutral-200">{averageData.sumAccuracy}%</p>
             </div>
           </div>
           <div className="rounded-xl  w-[300px] gap-3 border text-card-foreground  shadow bg-neutral-900/50 border-neutral-800 transition-all duration-300 hover:shadow-lg hover:bg-neutral-800/50 flex items-center py-6 px-9">

@@ -1,4 +1,4 @@
-import { UserDashboardTypes } from "@/app/dashboard/[userId]/page";
+import { dataAverageTypes, UserDashboardTypes } from "@/app/dashboard/[userId]/page";
 import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
 import { WPMType } from "@/hooks/useWPM";
 import { clsx, type ClassValue } from "clsx"
@@ -46,8 +46,8 @@ export const sortUser=(users: WarriorType[])=>{
   })
 }
 
-export const calculateAverage=(data:UserDashboardTypes[])=>{
-  if(data.length==0) return 0;
+export const calculateAverage=(data:UserDashboardTypes[]): dataAverageTypes=>{
+  if(data.length==0) return {sumAccuracy:0,sumWPM:0};
   let sumWPM=0, sumAccuracy=0;
   for(let i=0;i<data.length;i++){
     sumWPM+=data[i].averageWPM
