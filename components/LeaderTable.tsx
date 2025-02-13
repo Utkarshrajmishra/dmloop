@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "./ui/table";
 import { Input } from "./ui/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type User = {
   id: string;
@@ -59,7 +59,7 @@ const LeaderTable = () => {
 
 
   return (
-    <div className="w-full font-inter flex flex-col items-center justify-center gap-5">
+    <div className="w-full font-inter max-h-[70vh] overflow-auto flex flex-col items-center  gap-5">
       <div className="flex flex-col items-center">
         <p className="text-zinc-200 text-center flex gap-1 font-semibold text-xl">
           <Crown className="text-yellow-400" />

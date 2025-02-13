@@ -45,7 +45,7 @@ const Dashboard = async ({
   if(!session?.id)return redirect('/')
   const data: UserDashboardTypes[]=await fetchData(session?.id)
  const averageData: dataAverageTypes=calculateAverage(data)
- console.log(averageData)
+ console.log(data)
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-neutral-900 to-black h-[100vh] w-[100%] flex items-center justify-center font-mono">
       <div className="flex flex-col gap-6 mt-14 pb-6">
