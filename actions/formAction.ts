@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
-
+import { useToast } from "@/hooks/use-toast";
 
 const ArenaSchema = z.object({
   code: z
@@ -22,8 +22,18 @@ export type ArenaSchemaTypes = {
 
 export async function handleForm(
   _prevSate: ArenaSchemaTypes,
-  formData: FormData
+  formData: FormData,
+  session:any,
 ) {
+
+  if(!session){
+    return{
+      error:{
+        code: ['Login is required.']
+      }
+    }
+  }
+
   const code = formData.get("code") as string;
   const mode = formData.get("mode") as string;
 
@@ -39,6 +49,6 @@ export async function handleForm(
       error: validatedFields.error.flatten().fieldErrors,
     };
   }
-  console.log(code)
+
     redirect(`/multiplayer/war/${code}`);
 }
