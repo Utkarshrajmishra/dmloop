@@ -11,8 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "./ui/input";
-import type { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
-
+import { WarriorType } from "./War";
 export type DrawerCardPropsType = {
   users: WarriorType[];
   timer: number;
