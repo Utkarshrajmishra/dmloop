@@ -1,6 +1,6 @@
-import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
 import { User } from "lucide-react";
 import Image from "next/image";
+import { WarriorType } from "./War";
 type WarriorListProps = {
   warriorList: WarriorType[]
 };
