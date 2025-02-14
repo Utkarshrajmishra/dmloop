@@ -1,5 +1,5 @@
 import { dataAverageTypes, UserDashboardTypes } from "@/app/dashboard/[userId]/page";
-import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
+import { WarriorType } from "@/components/War";
 import { WPMType } from "@/hooks/useWPM";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"

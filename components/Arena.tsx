@@ -10,8 +10,7 @@ import { motion } from "framer-motion";
 import UserTyping from "./UserTyping";
 import Result from "./Result";
 import { DrawerCard } from "./Drawer";
-import { WarriorType } from "@/app/multiplayer/war/[...slug]/page";
-
+import { WarriorType } from "./War";
 type ArenaProps = {
   users: WarriorType[]
   handleGetScore:()=>void;
