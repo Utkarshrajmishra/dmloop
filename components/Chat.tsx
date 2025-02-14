@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { Send } from "lucide-react";
 import { Input } from "./ui/input";
 import { useState } from "react";
-import { ChatTypes } from "@/app/multiplayer/war/[...slug]/page";
+import { ChatTypes } from "./War";
 
 type ChatProps = {
   sendMessage: (msg: string) => void;
