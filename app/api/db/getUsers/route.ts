@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const userIds = scores.map((item) => item.userId);
+    const userIds = scores.map((item:any) => item.userId);
     const users = await prisma.user.findMany({
       where: {
         id: {
