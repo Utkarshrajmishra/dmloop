@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const result = scores.map((score) => {
+    const result = scores.map((score:any) => {
       const user = users.find((user) => user.id === score.userId);
       return {
         userId: score.userId,
