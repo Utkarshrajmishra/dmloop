@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     });
 
     const result = scores.map((score:any) => {
-      const user = users.find((user) => user.id === score.userId);
+      const user = users.find((user:any) => user.id === score.userId);
       return {
         userId: score.userId,
         averageWPM: score._avg.averageWPM || 0,
