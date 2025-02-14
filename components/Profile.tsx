@@ -63,10 +63,9 @@ const Profile = async({ session }: { session: session }) => {
                 action={async () => {
                   "use server";
                   await signOut();
-                  console.log("Hello");
                 }}
               >
-                <button type="submit" className="flex gap-2">
+                <button type="submit" className="flex gap-2 w-full">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </button>

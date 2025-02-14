@@ -1,23 +1,24 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSocket } from "@/context/SocketProvider";
-import { useParams } from "next/navigation";
-import { Hash, Copy, CirclePlay} from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { Hash, Copy, CirclePlay } from "lucide-react";
 import Chat from "@/components/Chat";
 import WarriorList from "@/components/WarriorList";
 import Arena from "@/components/Arena";
 import { sortUser } from "@/lib/utils";
 import { Alert } from "@/components/Alert";
+import { useToast } from "@/hooks/use-toast";
 
 export type WarriorType = {
   email: string;
   name: string;
   photoUrl: string;
   socketId: string;
-  wpm: number,
-  error:number,
-  time:number,
+  wpm: number;
+  error: number;
+  time: number;
 };
 
 export type ChatTypes = {
@@ -27,24 +28,26 @@ export type ChatTypes = {
 };
 
 const Page = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   const [gameStarted, setGameStarted] = useState(false);
   const params = useParams();
   const socket = useSocket();
-  const [alert, setAlert]=useState(false)
+  const [alert, setAlert] = useState(false);
   const [chat, setChat] = useState<ChatTypes[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const { data: session, status } = useSession();
   const [warriors, setWarrior] = useState<WarriorType[]>([]);
 
+  useEffect(() => {
+    if (status != "loading" && status != "authenticated") {
+      router.push("/multiplayer");
+    }
+  }, [status, router, session]);
+
   const handleNewUser = (user: WarriorType[]) => {
     setWarrior(user);
   };
-
-  useEffect(()=>{
-    if (status == "unauthenticated") {
-      setAlert(true);
-    }
-  },[session,status])
 
   useEffect(() => {
     if (params?.slug && socket && session && !isConnected) {
@@ -79,17 +82,16 @@ const Page = () => {
     }
   }, [params?.slug, socket, session, isConnected]);
 
-  const handleScoreUpdate=(warriors: WarriorType[])=>{
-    const users=sortUser(warriors)
-    setWarrior(users)
-  }
+  const handleScoreUpdate = (warriors: WarriorType[]) => {
+    const users = sortUser(warriors);
+    setWarrior(users);
+  };
 
-  const handleGetScore=()=>{
-    if(socket && session && params.slug){
-      socket?.emit("send_score",params?.slug[0]);
+  const handleGetScore = () => {
+    if (socket && session && params.slug) {
+      socket?.emit("send_score", params?.slug[0]);
     }
-  }
-
+  };
 
   const handleStart = (data: boolean) => {
     setGameStarted(true);
@@ -111,74 +113,90 @@ const Page = () => {
   };
 
   const handleGameStart = () => {
+    if (status != "authenticated" || !session) {
+      toast({
+        variant: "destructive",
+        className: "bg-neutral-950 text-white border border-neutral-700",
+        title: "Login is required!",
+        description: "Login is required to perform this action.",
+      });
+      return;
+    }
     if (socket && params?.slug && session) {
       socket.emit("start_game", params?.slug[0]);
     }
   };
 
-  const handleGameEnd=(wpm: number, error: number, time:number)=>{
-    if(socket && params?.slug && session){
-      console.log('emit')
-      socket.emit("game_completed",{wpm:wpm, error:error, time:time, room:params?.slug[0], email:session?.user?.email});
+  const handleGameEnd = (wpm: number, error: number, time: number) => {
+    if (socket && params?.slug && session) {
+      console.log("emit");
+      socket.emit("game_completed", {
+        wpm: wpm,
+        error: error,
+        time: time,
+        room: params?.slug[0],
+        email: session?.user?.email,
+      });
     }
-  }
+  };
 
   return (
-    <>    <section className="bg-gradient-to-b from-neutral-900 to-black min-h-screen pb-8 w-full flex justify-center">
-      {gameStarted ? (
-        <Arena
-          users={warriors}
-          handleGetScore={handleGetScore}
-          handleGameEnd={handleGameEnd}
-        />
-      ) : (
-        <div className="w-[80%] lg:w-[70%] items-center">
-          <div className="mt-20">
-            {params?.slug ? (
-              <div className=" flex flex-col gap-2">
-                <div className="flex  justify-between">
-                  <div className="flex items-center gap-3">
-                    <p className="text-3xl text-neutral-200 font-mono font-bold">
-                      {params.slug[0]}
-                    </p>
-                    {/* Vertical divider */}
-                    <div className="w-1 h-8 bg-neutral-200"></div>
-                    <p className="text-3xl flex gap-2 text-neutral-200 font-mono font-bold">
-                      20 Words - 30 Seconds
-                    </p>
+    <>
+      {" "}
+      <section className="bg-gradient-to-b  from-neutral-900 to-black max-h-fit pb-8 w-full flex justify-center">
+        {gameStarted ? (
+          <Arena
+            users={warriors}
+            handleGetScore={handleGetScore}
+            handleGameEnd={handleGameEnd}
+          />
+        ) : (
+          <div className="w-[80%] lg:w-[70%] items-center">
+            <div className="mt-20">
+              {params?.slug ? (
+                <div className=" flex flex-col gap-2">
+                  <div className="flex  justify-between">
+                    <div className="flex items-center gap-3">
+                      <p className="text-3xl text-neutral-200 font-mono font-bold">
+                        {params.slug[0]}
+                      </p>
+                      {/* Vertical divider */}
+                      <div className="w-1 h-8 bg-neutral-200"></div>
+                      <p className="text-3xl flex gap-2 text-neutral-200 font-mono font-bold">
+                        20 Words - 30 Seconds
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleGameStart}
+                      className="flex items-center gap-3 font-semibold text-neutral-200 py-2 px-3 rounded-md font-mono bg-emerald-700 hover:bg-emerald-800"
+                    >
+                      <CirclePlay className="size-5" />
+                      Get Started
+                    </button>
                   </div>
-                  <button
-                    onClick={handleGameStart}
-                    className="flex items-center gap-3 font-semibold text-neutral-200 py-2 px-3 rounded-md font-mono bg-emerald-700 hover:bg-emerald-800"
-                  >
-                    <CirclePlay className="size-5" />
-                    Get Started
-                  </button>
+                  <div className="text-neutral-400 flex gap-4 items-center mt-2">
+                    <Hash className="size-6" />
+                    <p className="font-mono">Room Code: {params.slug[0]}</p>
+                    <Copy className="size-5 cursor-pointer hover:text-neutral-200" />
+                  </div>
+                  {/* Horizontal divider */}
+                  <div className="w-full h-[0.5px] bg-neutral-800 mt-4"></div>
+                  <div className="flex gap-2">
+                    <Chat
+                      Chat={chat}
+                      userEmail={session?.user?.email}
+                      sendMessage={sendMsg}
+                    />
+                    <WarriorList warriorList={warriors} />
+                  </div>
                 </div>
-                <div className="text-neutral-400 flex gap-4 items-center mt-2">
-                  <Hash className="size-6" />
-                  <p className="font-mono">Room Code: {params.slug[0]}</p>
-                  <Copy className="size-5 cursor-pointer hover:text-neutral-200" />
-                </div>
-                {/* Horizontal divider */}
-                <div className="w-full h-[0.5px] bg-neutral-800 mt-4"></div>
-                <div className="flex gap-2">
-                  <Chat
-                    Chat={chat}
-                    userEmail={session?.user?.email}
-                    sendMessage={sendMsg}
-                  />
-                  <WarriorList warriorList={warriors} />
-                </div>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
           </div>
-        </div>
-      )}
-    </section>
-    <Alert state={alert} setState={setAlert}/>
+        )}
+      </section>
+      <Alert state={alert} setState={setAlert} />
     </>
-
   );
 };
 
