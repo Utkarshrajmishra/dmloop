@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
 
 const ArenaSchema = z.object({
   code: z
@@ -50,5 +49,13 @@ export async function handleForm(
     };
   }
 
-    redirect(`/multiplayer/war/${code}`);
+  return redirect(`/multiplayer/war/${code}`)
+
+    // return {
+    //   code,
+    //   mode,
+    //   error:{
+    //     code:['Success']
+    //   }
+    // };
 }

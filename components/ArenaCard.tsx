@@ -5,7 +5,7 @@ import { Selector } from "./select";
 import { Input } from "./ui/input";
 import { useActionState, useEffect } from "react";
 import { handleForm } from "@/actions/formAction";
-
+import { useRouter } from "next/navigation";
 const options = ["20 words", "30 words", "50 words"];
 const modes = ["Words War"];
 
@@ -23,6 +23,7 @@ const ArenaCard = ({
   buttonText,
 }: ArenaCardProps) => {
   
+  const router = useRouter();
   const {toast}=useToast()
 
  
@@ -44,6 +45,9 @@ const ArenaCard = ({
          title: "Login is required!",
          description: "Login is required to perform this action.",
        });
+     }
+     if(state.error.code!=null && state.error.code[0]==="Success"){
+        router.push(`multiplayer/war/${state.code}`)
      }
    }, [session, state?.error?.code]);
 
