@@ -3,15 +3,12 @@
 import { War } from "@/components/War";
 import { auth } from "@/auth";
 import { Suspense } from "react";
+import Loading from "@/app/(root)/loading";
 
 const Page = async () => {
   const session = await auth();
   return (
-    <Suspense
-      fallback={
-        <p>Loading</p>
-      }
-    >
+    <Suspense fallback={<Loading />}>
       <War auth={session} />
     </Suspense>
   );

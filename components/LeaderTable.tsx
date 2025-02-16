@@ -11,8 +11,9 @@ import {
 } from "./ui/table";
 import { Input } from "./ui/input";
 import { useState } from "react";
+import { sortLeaders, sortUser } from "@/lib/utils";
 
-type User = {
+export type User = {
   id: string;
   name: string;
   email: string;
@@ -63,15 +64,15 @@ const LeaderTable = () => {
       <div className="flex flex-col items-center">
         <p className="text-zinc-200 text-center flex gap-1 font-semibold text-xl">
           <Crown className="text-yellow-400" />
-          Leaderboard
+          Top 5 Players
         </p>
         <p className="text-neutral-400 text-sm mt-1">
-          This page refreshes in every 30 seconds 
+          This page refreshes in every 30 seconds
         </p>
       </div>
       <Input
         value={search}
-        onChange={(e)=>setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)}
         type="text"
         placeholder="Search by name..."
         className="flex h-9 font-inter w-full rounded-md border px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-neutral-800 border-neutral-700 text-neutral-200 placeholder-neutral-400"
@@ -98,24 +99,34 @@ const LeaderTable = () => {
         </TableHeader>
         <TableBody>
           {users &&
-            users.filter((item)=>item.name.toLowerCase().includes(search.toLowerCase())).map((item, index) => (
-              <TableRow
-                key={item.id || index}
-                className="border-neutral-300 hover:bg-neutral-900"
-              >
-                <TableCell className="text-neutral-200">{index + 1}</TableCell>
-                <TableCell className="text-neutral-200">{item.name}</TableCell>
-                <TableCell className="text-neutral-200">
-                  {Math.ceil(item.averageWPM)}
-                </TableCell>
-                <TableCell className="text-neutral-200">
-                  {parseFloat(item.averageAccuracy.toFixed(2))}%
-                </TableCell>
-                <TableCell className="text-neutral-200">
-                  {item.totalTime} seconds
-                </TableCell>
-              </TableRow>
-            ))}
+          sortLeaders(
+            users
+              .filter((item) =>
+                item.name.toLowerCase().includes(search.toLowerCase())
+              )
+            )
+              .map((item, index) => (
+                <TableRow
+                  key={item.id || index}
+                  className="border-neutral-300 hover:bg-neutral-900"
+                >
+                  <TableCell className="text-neutral-200">
+                    {index + 1}
+                  </TableCell>
+                  <TableCell className="text-neutral-200">
+                    {item.name}
+                  </TableCell>
+                  <TableCell className="text-neutral-200">
+                    {Math.ceil(item.averageWPM)}
+                  </TableCell>
+                  <TableCell className="text-neutral-200">
+                    {parseFloat(item.averageAccuracy.toFixed(2))}%
+                  </TableCell>
+                  <TableCell className="text-neutral-200">
+                    {item.totalTime} seconds
+                  </TableCell>
+                </TableRow>
+              ))}
         </TableBody>
       </Table>
     </div>

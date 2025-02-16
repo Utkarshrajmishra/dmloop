@@ -49,13 +49,12 @@ export async function handleForm(
     };
   }
 
-  return redirect(`/multiplayer/war/${code}`)
 
-    // return {
-    //   code,
-    //   mode,
-    //   error:{
-    //     code:['Success']
-    //   }
-    // };
+    return {
+      code,
+      mode,
+      error:{
+        code:['Success']
+      }
+    };
 }

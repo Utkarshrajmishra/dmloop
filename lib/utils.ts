@@ -1,4 +1,5 @@
 import { dataAverageTypes, UserDashboardTypes } from "@/app/dashboard/[userId]/page";
+import { User } from "@/components/LeaderTable";
 import { WarriorType } from "@/components/War";
 import { WPMType } from "@/hooks/useWPM";
 import { clsx, type ClassValue } from "clsx"
@@ -38,13 +39,22 @@ export const calculateWPMAverage=(wpmHistory: WPMType[])=>{
 
 export const sortUser=(users: WarriorType[])=>{
   return users.sort((a,b)=>{
-    if(a.wpm ===0 && b.wpm!==0) return -1;
-    if(b.wpm===0 && a.wpm!==0) return -1;
-    if(b.wpm!==a.wpm) return b.wpm-a.wpm;
-    if(a.error!==b.error) return a.error -b.error;
-    return a.time-b.time;
+    const scoreA=(a.error*2)+(a.wpm*1.5)-(a.time*0.1);
+    const scoreB = (b.error * 2) +( b.wpm * 1.5) - (b.time * 0.1);
+    return scoreB-scoreA;
+
   })
 }
+
+export const sortLeaders = (users: User[]) => {
+  return users.sort((a, b) => {
+    const scoreA =
+      a.averageAccuracy * 2 + a.averageWPM * 1.5 - a.totalTime* 0.1;
+    const scoreB =
+      b.averageAccuracy * 2 + b.averageWPM * 1.5 - b.totalTime * 0.01;
+    return scoreB - scoreA;
+  }).slice(0,5);
+};
 
 export const calculateAverage=(data:UserDashboardTypes[]): dataAverageTypes=>{
   if(data.length==0) return {sumAccuracy:0,sumWPM:0};
