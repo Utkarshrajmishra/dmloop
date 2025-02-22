@@ -26,7 +26,7 @@ export function ScreenSizeDialog() {
           <AlertDialogHeader>
             <AlertDialogTitle className="text-zinc-200">Please open on a larger screen</AlertDialogTitle>
             <AlertDialogDescription className="text-zinc-400">
-              The screen size is too small for our web application. Please make
+              The screen size is too small for the application to run. Please make
               sure to open it on a larger screen.
             </AlertDialogDescription>
           </AlertDialogHeader>
