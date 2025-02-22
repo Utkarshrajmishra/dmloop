@@ -1,6 +1,7 @@
 import { ScreenSizeDialog } from "@/components/ScreenSize";
 import { Button } from "@/components/ui/button";
 import { Keyboard, Swords } from "lucide-react";
+import Link from "next/link";
 export default function Home() {
   return (
     <>
@@ -20,19 +21,23 @@ export default function Home() {
                 real-time stats in a sleek, minimalist interface.
               </p>
               <div className="mt-8 flex justify-center gap-4">
-                <Button
-                  size="lg"
-                  className="bg-blue-800  outline outline-1 outline-white flex justify-center  font-jakarta text-white hover:bg-blue-700"
-                >
-                  Start Typing <Keyboard className="size-10" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-white   bg-black  "
-                >
-                  Start War <Swords />
-                </Button>
+                <Link href="/practice">
+                  <Button
+                    size="lg"
+                    className="bg-blue-800  outline outline-1 outline-white flex justify-center  font-jakarta text-white hover:bg-blue-700"
+                  >
+                    Start Typing <Keyboard className="size-10" />
+                  </Button>
+                </Link>
+                <Link href="/multiplayer">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-white   bg-black  "
+                  >
+                    Start War <Swords />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
