@@ -28,7 +28,7 @@ const Links = [
 const Navbar = async () => {
   const session = await auth();
   return (
-    <nav className="absolute  font-jakarta top-0 left-0 right-0 z-10">
+    <nav className="absolute hidden md:inline-block  font-jakarta top-0 left-0 right-0 z-10">
       <div className="flex py-4 justify-between items-center gap-2 px-16">
         <Link href="/" className="cursor-pointer flex items-center gap-2">
           <div className="h-8 w-8 shadow-xl shadow-blue-500 rounded-lg outline outline-1 outline-neutral-200  bg-black flex items-center justify-center font-bold">
