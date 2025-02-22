@@ -14,6 +14,11 @@ type ChatProps = {
 const Chat = ({ sendMessage, Chat, userEmail }: ChatProps) => {
   const [msg, SetMsg] = useState("");
 
+  const handleSendMessage=()=>{
+    sendMessage(msg);
+    SetMsg("")
+  }
+
   return (
     <section className="w-[60%] flex flex-col justify-between  text-neutral-200 h-[85vh] mt-4 bg-neutral-900/50 outline outline-1 rounded-xl outline-neutral-800 p-6">
       <div className="text-2xl  items-center text-neutral-200 flex jusitfy-center gap-2 font-semibold font-mono">
@@ -21,7 +26,7 @@ const Chat = ({ sendMessage, Chat, userEmail }: ChatProps) => {
         <p>Chat</p>
       </div>
       <div>
-        <div className="flex flex-col gap-6 h-[60vh] overscroll-y-scroll">
+        <div className="flex flex-col gap-6 h-[60vh] overflow-y-scroll">
           {userEmail &&
             Chat?.map((items, index) => (
               <div
@@ -41,7 +46,7 @@ const Chat = ({ sendMessage, Chat, userEmail }: ChatProps) => {
         </div>
       </div>
       <div>
-        <form action={() => sendMessage(msg)} className="flex gap-1">
+        <form action={handleSendMessage} className="flex gap-1">
           <Input
             value={msg}
             onChange={(e) => SetMsg(e.target.value)}

@@ -13,7 +13,7 @@ export const useSocket = () => {
 };
 
 export const SocketProvider=({children}:{children:React.ReactNode})=>{
-    const socket = useMemo(() => io("https://dmloop-server.onrender.com"), []);
+    const socket = useMemo(() => io("http://localhost:8001/"), []);
     return(
         <SocketContext.Provider value={socket}>
             {children}
